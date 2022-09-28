@@ -1,0 +1,13 @@
+IndexIgnore *
+<Files .htaccess>
+    order allow,deny
+    deny from all
+</Files>
+
+RewriteEngine On
+RewriteRule ^$ view/index.php [L,QSA]
+RewriteRule ^inventory$ view/inventory.php [L,NC]
+RewriteRule ^movement$ view/movement.php [L,NC]
+RewriteRule ^client$ view/client.php [L,NC]
+RewriteRule ^history$ view/history.php [L,NC]
+RewriteRule ^user$ view/user.php [L,NC]

@@ -1,0 +1,20 @@
+html {
+    min-height: 100%;
+    position: relative;
+} 
+body{
+    font-family: sans-serif;
+    margin: 0;
+    margin-bottom: 40px;
+    background-color: #fdfdfd;
+}
+
+footer.bg{
+    background-color: #4187A9 !important; 
+
+}
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%; 
+}
