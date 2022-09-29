@@ -60,7 +60,7 @@
                                     echo "<td>" . $u['id'] . "</td>";
                                     echo "<td>" . $u['username'] . "</td>";
                                     echo "<td>" . $user_type[$u['type']-1] . "</td>";
-                                    echo "<td><form action='deleteuser' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete'><span class='glyphicon glyphicon-trash'></span></button></form></td>";
+                                    echo "<td><form action='deleteuser' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "'><span class='glyphicon glyphicon-trash'></span></button></form></td>";
                                     echo "</tr>";
                                 } 
                             }else {
