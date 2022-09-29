@@ -1,3 +1,19 @@
+<?php
+    session_start(); 
+    if (!empty($_SESSION["username"])) {
+        
+        # validating time inactive
+        $last_action  = $_SESSION["last_action"];
+        $current_time = date("Y-n-j H:i:s");
+        $inactive     = (strtotime($current_time)-strtotime($last_action));
+       
+        //if session inactive time is 30 minutes close session
+        if ($inactive>=1800) {
+            header("location:./logout");
+        }
+        
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,73 +25,59 @@
     <title>Laboratorio del Lente</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4187A9;">
-        <div class="container-fluid">
-            <!-- <a href="#" class="navbar-brand">Navbar</a> -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a href="./inventory" class="nav-link" aria-current="page" >Inventario</a>
-                </li>
-                <li class="nav-item">
-                    <a href="./movement" class="nav-link">Movimientos</a>
-                </li>
-                <li class="nav-item">
-                    <a href="./client" class="nav-link">Clientes</a>
-                </li>
-                <li class="nav-item">
-                    <a href="./history" class="nav-link">Historial</a>
-                </li>
-                <li class="nav-item">
-                    <a href="./user" class="nav-link">Usuarios</a>
-                </li>
-            </ul>
-            <ul class="navbar-nav d-flex" role="login">
-                <li class="nav-item"><a href="./" class="nav-link active">Iniciar sesión</a></li>
-            </ul>
-            </div>
-        </div>
-    </nav>
+    <?php include('templates/navbar.php'); ?>
 
     <section class="wrapper">
         <div class="container">
             <div class="row">
+                
                 <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
-                    <form class="mt-2">
+                    <?php if (isset($_SESSION['username'])) { ?>
+                        <h2>Bienvenido, <?php echo $_SESSION['username']; ?></h2>
+                        <p>
+                            Privilegios: <?php echo ($_SESSION['type'] == 1)?'Administrador':'Operador'; ?>. 
+                        </p>
+                        <form action="./changepsw" method="post" name='change' id='change'>
+                            <h3>Cambia tu contraseña</h3>
+                            <div class="form-group">
+                                <label class='form-title' for="old">Contraseña actual</label>
+                                <input type="password" name='old' id='old' class='form-control form-input'>
+                            </div>
+                            <div class="form-group">
+                                <label class='form-title' for="newpsw">Contraseña nueva</label>
+                                <input type="password" name='newpsw' id='newpsw' class='form-control form-input'>
+                            </div>
+                            <div class="mb-3 form-group">
+                                <label class='form-title' for="rnewpsw">Repetir contraseña</label>
+                                <input type="password" name='rnewpsw' id='rnewpsw' class='form-control form-input'>
+                            </div>
+                            <button type="submit" class="btn btn-success" name='changepsw' id='changepsw' style="width: 100%;">Cambiar</button>
+                        </form>
+
+                    <?php }else{  ?>
+                    <form action="auth" class="mt-2" method="POST">
                         <div class="mb-3">
                             <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username">
+                            <input type="text" class="form-control" id="username" name="username">
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password">
+                            <label for="pass" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="pass" name="pass">
                         </div>
                         <div class="mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="keep">
                             <label class="form-check-label" for="keep">Mantener sesión activa</label>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">Ingresar</button>
+                        <button type="submit" class="btn btn-primary" id="login" name="login" style="width: 100%;">Ingresar</button>
                         <center><a href="#">¿Olvidaste la contraseña? Recuperala aquí.</a></center>
                     </form>
+                    <?php  } ?>
                 </div>
             </div>
         </div>
     </section>
 
-    <br>
-    <footer class="footer bg text-light" style="min-height:2.5rem;">
-    <div class="container-fluid">
-        <div class="row pt-2 pb-2">
-        <div class="col-12 text-left" style='margin-top: 5px;'>&copy; <?php
-    $fromYear = 2022;
-    $thisYear = (int)date('Y');
-    echo $fromYear . (($fromYear != $thisYear) ? '-' . $thisYear : '');?> UPTAEB. </div>
-        </div>
-    </div>
-    </footer>
+    <?php include('templates/footer.php'); ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 </html>
