@@ -39,6 +39,18 @@
                 </div>
                 
                 <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                     
+                    <?php
+                        echo "<span class='message-error mt-2 alert ";
+                        if (isset($_GET['created']) && $_GET['created'] == 'true') { echo "alert-success'>Usuario creado con éxito."; }
+                        else if (isset($_GET['created']) && $_GET['created'] == 'false') { echo "alert-danger'> Fallo al crear usuario."; }
+                        else if (isset($_GET['created']) && $_GET['created'] == 'inuse') { echo "alert-info'> Este usuario ya existe."; }
+                        else if (isset($_GET['deleted']) && $_GET['deleted'] == 'true') { echo "alert-success'> Usuario borrado con éxito."; }
+                        else if (isset($_GET['deleted']) && $_GET['deleted'] == 'false') { echo "alert-danger'> Fallo al borrar usuario."; }
+                        else { echo "' style='display:none;'>"; }
+                        echo "</span>";
+                    ?>
+                    
                     <div class="d-inline-block" style="width: 100%;">
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-user" style="float: right ;">Crear</button>
                     </div>
@@ -46,7 +58,9 @@
                     <thead style="background-color: #4187A9 !important; color:white;">
                         <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Usuario</th>
+                        <th scope="col">CI</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
                         <th scope="col">Tipo</th>
                         <th scope="col">Acciones</th>
                         </tr>
@@ -58,13 +72,15 @@
                                 foreach ($list as $u) {
                                     echo "<tr>";
                                     echo "<td>" . $u['id'] . "</td>";
-                                    echo "<td>" . $u['username'] . "</td>";
+                                    echo "<td>" . $u['ci'] . "</td>";
+                                    echo "<td>" . $u['name'] . "</td>";
+                                    echo "<td>" . $u['last_name'] . "</td>";
                                     echo "<td>" . $user_type[$u['type']-1] . "</td>";
                                     echo "<td><form action='deleteuser' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "'><span class='glyphicon glyphicon-trash'></span></button></form></td>";
                                     echo "</tr>";
                                 } 
                             }else {
-                                echo "<tr><td colspan=4><center>Aún no hay usuarios.</center></td></tr>";
+                                echo "<tr><td colspan=6><center>Aún no hay usuarios.</center></td></tr>";
                             }
                             
                         ?>
@@ -86,8 +102,16 @@
         <div class="modal-body">
         <form action="./create" method="post">
             <div class="form-group">
-                <label class='form-title' for="username">Nombre de usuario</label>
-                <input type="text" name='username' id='username' class='form-control form-input'>
+                <label class='form-title' for="ci">Cedula de identidad</label>
+                <input type="text" name='ci' id='ci' class='form-control form-input'>
+            </div>
+            <div class="form-group">
+                <label class='form-title' for="name">Nombre</label>
+                <input type="text" name='name' id='name' class='form-control form-input'>
+            </div>
+            <div class="form-group">
+                <label class='form-title' for="last_name">Apellido</label>
+                <input type="text" name='last_name' id='last_name' class='form-control form-input'>
             </div>
             <div class="form-group">
                 <label class='form-title' for="username">Tipo de usuario</label>

@@ -7,17 +7,19 @@
             $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
             $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $user        = new User($connection);
-            $username    = strtolower(htmlentities(addslashes($_POST['username']), ENT_QUOTES));
-            if ($user->exist($username)) {
-                $can     = $user->isOperational($username);
+            $ci          = strtolower(htmlentities(addslashes($_POST['ci']), ENT_QUOTES));
+            if ($user->exist($ci)) {
+                $can     = $user->isOperational($ci);
                 if ($can) {
-                    $user->setUsername($username);
+                    $user->setCI($ci);
                     $user->setPassword(htmlentities(addslashes($_POST['pass']), ENT_QUOTES));
                     $valid = $user->validateUser();
                     if ($valid) {
                         session_start();
-                        $_SESSION['username']    = $user->getUsername();
+                        $_SESSION['username']    = $user->getCI();
                         $_SESSION["password"]    = $user->getPassword();
+                        $_SESSION["name"]        = $user->getName();
+                        $_SESSION["last_name"]   = $user->getLastName();
                         $_SESSION['type']        = $user->getType();
                         $_SESSION['last_action'] = date('Y-n-j H:i:s');
                         echo $_SESSION['username'];

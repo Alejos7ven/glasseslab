@@ -24,8 +24,8 @@
             $amount = $result->rowCount();
             return $amount;
         }
-        public function isOperational($username) {
-            $result = $this->doQuery("SELECT status FROM users WHERE username LIKE '$username'",true);
+        public function isOperational($ci) {
+            $result = $this->doQuery("SELECT status FROM users WHERE ci LIKE '$ci'",true);
             $status = '';
             while($response=$result->fetch(PDO::FETCH_ASSOC)){
                 $status = $response['status'];

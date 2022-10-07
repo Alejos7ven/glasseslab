@@ -10,12 +10,14 @@
             if (isset($_POST['create'])) { 
                 $can         = $user->isOperational($_SESSION['username']);
                 if ($can) {
-                    $user -> setUsername(htmlentities(addslashes($_POST['username']), ENT_QUOTES));
+                    $user -> setCI(htmlentities(addslashes($_POST['ci']), ENT_QUOTES));
                     $aux  = new User($connection);
-                    $data = $aux->getRowCount("SELECT * FROM users WHERE username LIKE '" . $user->getUsername() . "'");
+                    $data = $aux->getRowCount("SELECT * FROM users WHERE ci LIKE '" . $user->getCI() . "'");
                     if ($data == 0) {
                         $user->setPassword(htmlentities(addslashes($_POST['pass']), ENT_QUOTES));
                         $user->setType(htmlentities(addslashes($_POST['type']), ENT_QUOTES));
+                        $user->setName(htmlentities(addslashes($_POST['name']), ENT_QUOTES));
+                        $user->setLastName(htmlentities(addslashes($_POST['last_name']), ENT_QUOTES));
                         $created = $user->registerNewUser($user, $_SESSION['username']);
                         if ($created) {
                             $_SESSION['last_action'] = date('Y-n-j H:i:s');

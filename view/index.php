@@ -32,10 +32,23 @@
             <div class="row">
                 
                 <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                     
+                        <?php
+                            echo "<span class='message-error mt-2 alert ";
+                            if (isset($_GET['logged']) && $_GET['logged'] == 'false') { echo "alert-danger'> Usuario o contraseña incorrecta"; }
+                            else if (isset($_GET['logged']) && $_GET['logged'] == 'true') { echo "alert-success'> Inicio de sesión exitoso"; }
+                            else if (isset($_GET['banned']) && $_GET['banned'] == 'true') { echo "alert-info'> Tu cuenta esta baneada."; }
+                            else if (isset($_GET['changed']) && $_GET['changed'] == 'true') { echo "alert-success'> Tu contraseña ha sido cambiada."; }
+                            else if (isset($_GET['changed']) && $_GET['changed'] == 'false') { echo "alert-danger'> Fallo al cambiar contraseña."; }
+                            else { echo "' style='display:none;'>"; }
+                            echo "</span>";
+                        ?>
+                        
                     <?php if (isset($_SESSION['username'])) { ?>
-                        <h2>Bienvenido, <?php echo $_SESSION['username']; ?></h2>
+                        <h2>Bienvenido, <?php echo $_SESSION['name'] . " " . $_SESSION['last_name']; ?>. </h2>
                         <p>
-                            Privilegios: <?php echo ($_SESSION['type'] == 1)?'Administrador':'Operador'; ?>. 
+                            Privilegios: <?php echo ($_SESSION['type'] == 1)?'Administrador':'Operador'; ?>.<br>
+                            Cedula de Identidad:  <?php echo $_SESSION['username']; ?>.
                         </p>
                         <form action="./changepsw" method="post" name='change' id='change'>
                             <h3>Cambia tu contraseña</h3>
@@ -57,8 +70,8 @@
                     <?php }else{  ?>
                     <form action="auth" class="mt-2" method="POST">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="username" name="username">
+                            <label for="ci" class="form-label">Cedula de identidad</label>
+                            <input type="text" class="form-control" id="ci" name="ci">
                         </div>
                         <div class="mb-3">
                             <label for="pass" class="form-label">Contraseña</label>

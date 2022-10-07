@@ -21,3 +21,7 @@ footer {
 .navbar a {
     color: white;
 }
+.message-error{
+    width: 100%;
+    display: block;
+}
