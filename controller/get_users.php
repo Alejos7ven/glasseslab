@@ -11,11 +11,11 @@
         $list    = []; 
         while($response=$result->fetch(PDO::FETCH_ASSOC)){
             $c = array(
-                "id"       => $response['id'],
-                "ci" => $response['ci'],
-                "name" => $response['name'],
+                "id"        => $response['id'],
+                "ci"        => $response['ci'],
+                "name"      => $response['name'],
                 "last_name" => $response['last_name'],
-                "type"   => $response['type'],
+                "type"      => $response['type'],
                 "status"    => $response['status']
             ); 
             array_push($list, $c); 

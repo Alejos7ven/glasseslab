@@ -11,15 +11,12 @@
                     <a href="./inventory" class="nav-link " aria-current="page" >Inventario</a>
                 </li>
                 <li class="nav-item">
-                    <a href="./movement" class="nav-link">Movimientos</a>
+                    <a href="./movement" class="nav-link">Compra/Venta</a>
                 </li>
                 <li class="nav-item">
                     <a href="./client" class="nav-link">Clientes</a>
                 </li>
-                <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {  ?>
-                <li class="nav-item">
-                    <a href="./history" class="nav-link">Historial</a>
-                </li>
+                <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {  ?> 
                 <li class="nav-item">
                     <a href="./user" class="nav-link">Usuarios</a>
                 </li>

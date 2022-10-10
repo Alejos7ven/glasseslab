@@ -36,6 +36,7 @@
                             else if (isset($_GET['banned']) && $_GET['banned'] == 'true') { echo "alert-info'> Tu cuenta esta baneada."; }
                             else if (isset($_GET['changed']) && $_GET['changed'] == 'true') { echo "alert-success'> Tu contraseña ha sido cambiada."; }
                             else if (isset($_GET['changed']) && $_GET['changed'] == 'false') { echo "alert-danger'> Fallo al cambiar contraseña."; }
+                            else if (isset($_GET['banned']) && $_GET['banned'] == 'true') { echo "alert-danger'> Tu cuenta ha sido limitada."; }
                             else { echo "' style='display:none;'>"; }
                             echo "</span>";
                         ?>

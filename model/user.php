@@ -139,5 +139,17 @@
             }
             
         }
+        public function updateUser(User $user){
+            $sql = "
+            UPDATE users SET    ci        = '" . $user->getCI() . "',
+                                name      = '" . $user->getName() . "',
+                                last_name = '" . $user->getLastName() . "',
+                                type      = '" . $user->getType() . "',
+                                status    = '" . $user->getStatus() . "'
+                    WHERE id = " . $user->getId() . "
+            ";
+            $result = $this->connection->query($sql); 
+            return ($result)? true:false; 
+        }
     }
 ?>

@@ -42,6 +42,9 @@
                         else if (isset($_GET['created']) && $_GET['created'] == 'inuse') { echo "alert-info'> Este usuario ya existe."; }
                         else if (isset($_GET['deleted']) && $_GET['deleted'] == 'true') { echo "alert-success'> Usuario borrado con éxito."; }
                         else if (isset($_GET['deleted']) && $_GET['deleted'] == 'false') { echo "alert-danger'> Fallo al borrar usuario."; }
+                        else if (isset($_GET['editted']) && $_GET['editted'] == 'true') { echo "alert-success'> Usuario editado con éxito."; }
+                        else if (isset($_GET['editted']) && $_GET['editted'] == 'false') { echo "alert-danger'> Fallo al editar usuario."; }
+                        else if (isset($_GET['banned']) && $_GET['banned'] == 'true') { echo "alert-danger'> Tu cuenta ha sido limitada."; }
                         else { echo "' style='display:none;'>"; }
                         echo "</span>";
                     ?>
@@ -65,14 +68,61 @@
                             $user_type = ['Administrador', 'Operador'];
                             if (count($list)>0) {
                                 foreach ($list as $u) {
+                                    $status = ($u['status'] != 1)?"selected":"";
                                     echo "<tr>";
                                     echo "<td>" . $u['id'] . "</td>";
                                     echo "<td>" . $u['ci'] . "</td>";
                                     echo "<td>" . $u['name'] . "</td>";
                                     echo "<td>" . $u['last_name'] . "</td>";
                                     echo "<td>" . $user_type[$u['type']-1] . "</td>";
-                                    echo "<td><form action='deleteuser' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "'><span class='glyphicon glyphicon-trash'></span></button></form></td>";
+                                    echo "<td nowrap><form action='deleteuser' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "' style='display:block;float:left;width:49%;'><span class='glyphicon glyphicon-trash'></span></button></form>
+                                    <button type='button' class='btn btn-warning' name='edit' id='edit" . $u['id'] . '-' . $u['id'] . "' data-bs-toggle='modal' data-bs-target='#edit-user-" . $u['id'] . "' style='display:block;width:49%;color:white;'><span class='glyphicon glyphicon-pencil'></span></button></td>";
                                     echo "</tr>";
+                                    echo '<div class="modal fade" id="edit-user-' . $u['id'] . '" tabindex="1" aria-labelledby="edit-user" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                        <form action="./edituser" method="post" name="edit-user-form" id="edit-user-form">
+                                        <input type="hidden" name="user_id" id="user_id_' . $u['id'] . '" value="' . $u['id'] . '">
+                                            <div class="form-group">
+                                                <label class="form-title" for="ci">Cedula de identidad</label>
+                                                <input type="text" name="ci" id="ci" class="form-control form-input" value="' . $u['ci'] . '">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-title" for="name">Nombre</label>
+                                                <input type="text" name="name" id="name" class="form-control form-input" value="' . $u['name'] . '">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-title" for="last_name">Apellido</label>
+                                                <input type="text" name="last_name" id="last_name" class="form-control form-input" value="' . $u['last_name'] . '">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-title" for="type">Tipo de usuario</label>
+                                                <select name="type" id="type" class="form-control form-input">
+                                                    <option value="2">Operador</option>
+                                                    <option value="1">Administrador</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-title" for="status">¿Bloquear usuario?</label>
+                                                <select name="status" id="status" class="form-control form-input">
+                                                    <option value="1">No</option>
+                                                    <option value="2" ' . $status . '>Si</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" class="btn btn-primary" name="edit-user" id="edit-user">Editar</button>
+                                            </form>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>';
                                 } 
                             }else {
                                 echo "<tr><td colspan=6><center>Aún no hay usuarios.</center></td></tr>";

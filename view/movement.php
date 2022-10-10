@@ -18,7 +18,7 @@
 <html lang="en">
 <head>
     <?php include('templates/lib.php'); ?>
-    <title>Gestionar Movimientos</title>
+    <title>Gestionar compra y venta.</title>
 </head>
 <body>
 <?php include('templates/navbar.php'); ?>
