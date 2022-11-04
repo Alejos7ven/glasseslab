@@ -9,7 +9,7 @@
        
         //if session inactive time is 30 minutes close session
         if ($inactive>=1800) {
-            header("location:./logout");
+            header("location:../controller/logout.php");
         }
         
     }
@@ -47,7 +47,7 @@
                             Privilegios: <?php echo ($_SESSION['type'] == 1)?'Administrador':'Operador'; ?>.<br>
                             Cedula de Identidad:  <?php echo $_SESSION['username']; ?>.
                         </p>
-                        <form action="./changepsw" method="post" name='change' id='change'>
+                        <form action="../controller/update_password.php" method="post" name='change' id='change'>
                             <h3>Cambia tu contraseña</h3>
                             <div class="form-group">
                                 <label class='form-title' for="old">Contraseña actual</label>
@@ -65,7 +65,7 @@
                         </form>
 
                     <?php }else{  ?>
-                    <form action="auth" class="mt-2" method="POST" name="login-form" id="login-form">
+                    <form action="../controller/auth.php" class="mt-2" method="POST" name="login-form" id="login-form">
                         <div class="mb-3">
                             <label for="ci" class="form-label">Cedula de identidad</label>
                             <input type="text" class="form-control" id="ci" name="ci">
@@ -88,7 +88,7 @@
     </section>
 
     <?php include('templates/footer.php'); ?>
-    <script src="view/js/validate.js"></script>
-    <script src="view/lib/bootstrap.js" ></script>
+    <script src="js/validate.js"></script>
+    <script src="lib/bootstrap.js" ></script>
 </body>
 </html>

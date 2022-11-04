@@ -20,17 +20,17 @@ if (!empty($_SESSION['username'])) {
                     $user -> setLastName(htmlentities(addslashes($_POST['last_name']), ENT_QUOTES));
                     $user -> setStatus(htmlentities(addslashes($_POST['status']), ENT_QUOTES));
                     $res  = $user -> updateUser($user);
-                    if ($res) { header("location:./user?editted=true"); }
-                    else{ header("location:./user?editted=false"); }
+                    if ($res) { header("location:../view/user.php?editted=true"); }
+                    else{ header("location:../view/user.php?editted=false"); }
                     
                 }else {
-                    header('location:./user?banned=true');
+                    header('location:../view/user.php?banned=true');
                 } 
         }
     } catch (\Throwable $th) {
         //throw $th;
     }
 }else {
-    header('location:./');
+    header('location:../view/index.php');
 }
 ?>

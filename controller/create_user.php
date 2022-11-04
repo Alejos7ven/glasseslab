@@ -21,22 +21,22 @@
                         $created = $user->registerNewUser($user, $_SESSION['username']);
                         if ($created) {
                             $_SESSION['last_action'] = date('Y-n-j H:i:s');
-                            header('location:./user?created=true');
+                            header('location:../view/user.php?created=true');
                         }else {
-                            header('location:./user?created=false');
+                            header('location:../view/user.php?created=false');
                         }
                     }else {
-                        header('location:./user?created=inuse');
+                        header('location:../view/user.php?created=inuse');
                     }
                 }else {
-                    header('location:./user?banned=true');
+                    header('location:../view/user.php?banned=true');
                 } 
             }
         } catch (\Throwable $th) {
             //throw $th;
         }
     }else {
-        header('location:./');
+        header('location:../view/index.php');
     }
     
 

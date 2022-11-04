@@ -23,15 +23,15 @@
                         $_SESSION['type']        = $user->getType();
                         $_SESSION['last_action'] = date('Y-n-j H:i:s');
                         echo $_SESSION['username'];
-                        header('location:./?logged=true');
+                        header('location:../view/index.php?logged=true');
                     }else {
-                        header('location:./?logged=false');
+                        header('location:../view/index.php?logged=false');
                     }
                 }else {
-                    header('location:./?banned=true');
+                    header('location:../view/index.php?banned=true');
                 }
             }else {
-                header('location:./?logged=false');
+                header('location:../view/index.php?logged=false');
             }
             
         } catch (Exception $e) {
@@ -40,6 +40,6 @@
             die("Error: " . $e->getMessage());
         }
     }else {
-        header('location:./');
+        header('location:../view/index.php');
     }
 ?>

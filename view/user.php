@@ -11,10 +11,10 @@
        
         //if session inactive time is 30 minutes close session
         if ($inactive>=1800) {
-            header("location:./logout");
+            header("location:../controller/logout.php");
         }
         
-    }else { header('location:./');  }
+    }else { header('location:../view/index.php');  }
     include_once('../controller/get_users.php');
 ?>
 <!DOCTYPE html>
@@ -75,7 +75,7 @@
                                     echo "<td>" . $u['name'] . "</td>";
                                     echo "<td>" . $u['last_name'] . "</td>";
                                     echo "<td>" . $user_type[$u['type']-1] . "</td>";
-                                    echo "<td nowrap><form action='deleteuser' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "' style='display:block;float:left;width:49%;'><span class='glyphicon glyphicon-trash'></span></button></form>
+                                    echo "<td nowrap><form action='../controller/delete_user.php' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "' style='display:block;float:left;width:49%;'><span class='glyphicon glyphicon-trash'></span></button></form>
                                     <button type='button' class='btn btn-warning' name='edit' id='edit" . $u['id'] . '-' . $u['id'] . "' data-bs-toggle='modal' data-bs-target='#edit-user-" . $u['id'] . "' style='display:block;width:49%;color:white;'><span class='glyphicon glyphicon-pencil'></span></button></td>";
                                     echo "</tr>";
                                     echo '<div class="modal fade" id="edit-user-' . $u['id'] . '" tabindex="1" aria-labelledby="edit-user" aria-hidden="true">
@@ -86,7 +86,7 @@
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                        <form action="./edituser" method="post" name="edit-user-form" id="edit-user-form">
+                                        <form action="../controller/edit_user.php" method="post" name="edit-user-form" id="edit-user-form">
                                         <input type="hidden" name="user_id" id="user_id_' . $u['id'] . '" value="' . $u['id'] . '">
                                             <div class="form-group">
                                                 <label class="form-title" for="ci">Cedula de identidad</label>
@@ -145,7 +145,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-        <form action="./create" method="post" name="create-user-form" id="create-user-form">
+        <form action="../controller/create_user.php" method="post" name="create-user-form" id="create-user-form">
             <div class="form-group">
                 <label class='form-title' for="ci">Cedula de identidad</label>
                 <input type="text" name='ci' id='ci' class='form-control form-input'>
@@ -185,7 +185,7 @@
     </div>
 
     <?php include('templates/footer.php'); ?>
-    <script src="view/js/validate.js"></script>
-    <script src="view/lib/bootstrap.js"></script>
+    <script src="js/validate.js"></script>
+    <script src="lib/bootstrap.js"></script>
 </body>
 </html>

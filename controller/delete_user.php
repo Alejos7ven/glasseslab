@@ -10,10 +10,10 @@
         $id     = htmlentities(addslashes($_POST['user_id']), ENT_QUOTES);
         $result = $user->doQuery("DELETE FROM users WHERE id=" . $id);
         if ($result) {
-            header('location:./user?deleted=true');
+            header('location:../view/user.php?deleted=true');
         }else {
-            header('location:./user?deleted=false');
+            header('location:../view/user.php?deleted=false');
         }
-    } else { header('location:./'); }
+    } else { header('location:../view/index.php'); }
     
 ?>

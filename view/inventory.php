@@ -9,10 +9,10 @@
        
         //if session inactive time is 30 minutes close session
         if ($inactive>=1800) {
-            header("location:./logout");
+            header("location:../controller/logout.php");
         }
         
-    }else { header('location:./');  }
+    }else { header('location:../view/index.php');  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -57,6 +57,6 @@
     </section>
 
     <?php include('templates/footer.php'); ?>
-    <script src="view/lib/bootstrap.min.js" ></script>
+    <script src="lib/bootstrap.min.js" ></script>
 </body>
 </html>

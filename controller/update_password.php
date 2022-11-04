@@ -16,12 +16,12 @@
                     $valid = $user->updatePassword($old, $new, $_SESSION['username']);
                     if ($valid) { 
                         session_destroy();
-                        header('location:./?changed=true');
+                        header('location:../view/index.php?changed=true');
                     }else {
-                        header('location:./?changed=false');
+                        header('location:../view/index.php?changed=false');
                     }
                 }else {
-                    header('location:./?banned=true');
+                    header('location:../view/index.php?banned=true');
                 } 
             } catch (Exception $e) {
                 //catch errors
@@ -29,7 +29,7 @@
                 die("Error: " . $e->getMessage());
             }
         }else {
-            header('location:./');
+            header('location:../view/index.php');
         }
     }
     

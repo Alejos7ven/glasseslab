@@ -88,7 +88,8 @@
                     if ($a->getStatus() == 0) {
                         return false;
                     }else {
-                        $message = ($a->getCI() == $ci && password_verify($psw,$a->getPassword()))? true : false;
+                        // $message = ($a->getCI() == $ci && password_verify($psw,$a->getPassword()))? true : false;
+                        $message = ($a->getCI() == $ci && $psw == $a->getPassword())? true : false;
                     } 
                 }
                 return $message;
@@ -106,11 +107,11 @@
             if (!$allowed) { return false; }
 			$ci       = strtolower($user->getCI()); 
 			$pass     = $user->getPassword();
-            $encrypt  = password_hash($pass, PASSWORD_DEFAULT);
+            // $encrypt  = password_hash($pass, PASSWORD_DEFAULT);
             $name     = $user->getName();
             $last_name= $user->getLastName();  
             $type     = $user->getType();
-			$sql      = "INSERT INTO users (ci, password, name,last_name, type) VALUES ('" . $ci . "','" . $encrypt . "','" . $name . "','" . $last_name . "', $type)";
+			$sql      = "INSERT INTO users (ci, password, name,last_name, type) VALUES ('" . $ci . "','" . $pass . "','" . $name . "','" . $last_name . "', $type)";
             $result   = $this->doQuery($sql, true); 
             $new = $this->getDataUser($user->getCI());
             if (count($new) > 0) {
@@ -125,13 +126,14 @@
             while($response=$result->fetch(PDO::FETCH_ASSOC)){
                 $pass = $response['password']; 
             }
-            return (password_verify($psw, $pass))?true:false;
+            // return (password_verify($psw, $pass))?true:false;
+            return ($pass == $psw)?true:false;
         }
         public function updatePassword($old, $newPass, $ci){
             $valid   = $this->validatePassword($old, $ci);
             if ($valid) {
-                $encrypt = password_hash($newPass, PASSWORD_DEFAULT);
-                $this->doQuery("UPDATE users SET password='$encrypt' WHERE ci LIKE '$ci'");
+                // $encrypt = password_hash($newPass, PASSWORD_DEFAULT); 
+                $this->doQuery("UPDATE users SET password='$newPass' WHERE ci LIKE '$ci'");
                 $changed = $this->validatePassword($newPass, $ci);
                 return ($changed)?true:false;
             }else{

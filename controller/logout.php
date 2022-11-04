@@ -3,6 +3,6 @@
 
     session_destroy();
 
-    header('location:./');
+    header('location:../view/index.php');
 
 ?>
