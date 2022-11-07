@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #4187A9;">
         <div class="container-fluid">
-            <a href="#" class="navbar-brand"><img src="img/PG.png" width="80px"></a>
+            <a href="index.php" class="navbar-brand"><img src="img/PG.png" width="80px"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
@@ -8,17 +8,20 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <?php if(isset($_SESSION['username'])) { ?>
                 <li class="nav-item">
-                    <a href="inventory.php" class="nav-link " aria-current="page" >Inventario</a>
+                    <a href="inventario.php" class="nav-link " aria-current="page" >Inventario</a>
                 </li>
                 <li class="nav-item">
-                    <a href="movement.php" class="nav-link">Compra/Venta</a>
+                    <a href="movimientos.php" class="nav-link">Compra/Venta</a>
                 </li>
                 <li class="nav-item">
-                    <a href="client.php" class="nav-link">Clientes</a>
+                    <a href="actores.php" class="nav-link">Clientes/Proveedores</a>
+                </li>
+                <li class="nav-item">
+                    <a href="pedidos.php" class="nav-link">Pedidos</a>
                 </li>
                 <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {  ?> 
                 <li class="nav-item">
-                    <a href="user.php" class="nav-link">Usuarios</a>
+                    <a href="usuarios.php" class="nav-link">Usuarios</a>
                 </li>
                 <?php }} ?>
             </ul>

@@ -39,3 +39,47 @@ $('#create-user-form').validate({
         rpass:{required:reqtext, equalTo:"Las claves no coinciden"}
     }
 });
+$('.edit-user-form').each(function(e){
+    $(this).validate({
+        rules:{
+            ci:{required:true, digits:true},
+            name:{required:true, lettersonly:true},
+            last_name:{required:true, lettersonly:true}
+        },
+        messages:{
+            ci:{required:reqtext},
+            name:{required:reqtext, lettersonly:"Solo puedes escribir letras"},
+            last_name:{required:reqtext, lettersonly:"Solo puedes escribir letras"}
+        }
+    });
+});
+$('#create-item-form').validate({
+    rules:{
+        nombre:{required:true},
+        color:{required:true, lettersonly:true},
+        marca:{required:true, lettersonly:true},
+        precio:{required:true, digits:true}
+    },
+    messages:{
+        nombre:{required:reqtext},
+        color:{required:reqtext, lettersonly:"Solo puedes escribir letras"},
+        marca:{required:reqtext, lettersonly:"Solo puedes escribir letras"},
+        precio:{required:reqtext, digits:"Solo puedes utilizar numeros"}
+    }
+});
+$('.edit-item-form').each(function(e){
+    $(this).validate({
+    rules:{
+        nombre:{required:true},
+        color:{required:true, lettersonly:true},
+        marca:{required:true, lettersonly:true},
+        precio:{required:true, digits:true}
+    },
+    messages:{
+        nombre:{required:reqtext},
+        color:{required:reqtext, lettersonly:"Solo puedes escribir letras"},
+        marca:{required:reqtext, lettersonly:"Solo puedes escribir letras"},
+        precio:{required:reqtext, digits:"Solo puedes utilizar numeros"}
+    }
+    });
+});

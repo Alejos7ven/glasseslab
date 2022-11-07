@@ -20,11 +20,11 @@ if (!empty($_SESSION['username'])) {
                     $user -> setLastName(htmlentities(addslashes($_POST['last_name']), ENT_QUOTES));
                     $user -> setStatus(htmlentities(addslashes($_POST['status']), ENT_QUOTES));
                     $res  = $user -> updateUser($user);
-                    if ($res) { header("location:../view/user.php?editted=true"); }
-                    else{ header("location:../view/user.php?editted=false"); }
+                    if ($res) { header("location:../view/usuarios.php?editted=true"); }
+                    else{ header("location:../view/usuarios.php?editted=false"); }
                     
                 }else {
-                    header('location:../view/user.php?banned=true');
+                    header('location:../view/usuarios.php?banned=true');
                 } 
         }
     } catch (\Throwable $th) {

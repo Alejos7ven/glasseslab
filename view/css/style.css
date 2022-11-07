@@ -28,3 +28,17 @@ footer {
 .error {
     color: red;
 }
+.table-responsive::-webkit-scrollbar{
+    height: 10px;
+    width: 10px;
+}  
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.582);
+    height: 2px;
+    border-radius: .5rem;
+}
+.search-bar{
+    display: block;
+    width: 30%!important;
+    float: right;
+}
