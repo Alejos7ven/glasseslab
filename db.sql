@@ -23,9 +23,6 @@ CREATE TABLE IF NOT EXISTS `inventario` (
 --
 -- Dumping data for table `users`
 --
-
---- INSERT INTO `users` (`id`, `ci`, `password`, `name`,`last_name`) VALUES
---- (1, 'root', '$2y$10$o4.fHgUamviB2few2/dgju1HxluvSeuK1CtLHxRVmQPT9IZzcXfaO', 'super', 'admin');
-
+ 
 INSERT INTO `users` (`id`, `ci`, `password`, `name`,`last_name`) VALUES
 (1, 'root', '12345678', 'super', 'admin');

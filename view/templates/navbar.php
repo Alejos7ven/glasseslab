@@ -10,15 +10,15 @@
                 <li class="nav-item">
                     <a href="inventario.php" class="nav-link " aria-current="page" >Inventario</a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a href="movimientos.php" class="nav-link">Compra/Venta</a>
                 </li>
                 <li class="nav-item">
                     <a href="actores.php" class="nav-link">Clientes/Proveedores</a>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <a href="pedidos.php" class="nav-link">Pedidos</a>
-                </li>
+                </li> -->
                 <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {  ?> 
                 <li class="nav-item">
                     <a href="usuarios.php" class="nav-link">Usuarios</a>

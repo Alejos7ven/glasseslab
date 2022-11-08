@@ -1,5 +1,5 @@
 <?php
-    $dbhost='mysql:host=localhost; dbname=glasseslab';
+    $dbhost='mysql:host=localhost; dbname=dblab';
     $dbuser='root';
     $dbpass=''; 
 ?>
