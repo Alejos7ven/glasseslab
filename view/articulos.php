@@ -13,7 +13,7 @@
         }
         
     }else { header('location:../view/index.php');  }
-    include_once('../controller/get_inventory.php');
+    include_once('../controller/get_articles.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h2>Gestionar Inventario</h2>
+                    <h2>Gestionar Artículos</h2>
                 </div>
                 <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2">
                     <?php
@@ -46,7 +46,8 @@
                     ?>
                     <div class="d-inline-block" style="width: 100%;">
                         <input type="number" class="form-control search-bar" name="search-art" id="search-art" placeholder="Buscar">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-item" style="float: right ;">Agregar</button>
+                        <div class="" style="float: right ;padding-right:10px;"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-item">Registrar</button></div>
+                        
                     </div>
                     <div class="table-responsive">
                         <div class='articulo-main'>
@@ -77,18 +78,19 @@
                                             echo "<td>" . $u['precio'] . "</td>";
                                             echo "<td>" . $u['tipo'] . "</td>";
                                             echo "<td>" . $u['stock'] . "</td>";
-                                            echo "<td nowrap><form action='../controller/delete_inventory_item.php' method='POST'><input type='hidden' name='art_id' id='art_id_" . $u['id_articulo'] . "' value='" . $u['id_articulo'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id_articulo'] . '-' . $u['id_articulo'] . "' style='display:block;float:left;width:49%;'><span class='glyphicon glyphicon-trash'></span></button></form>
-                                            <button type='button' class='btn btn-warning' name='edit' id='edit" . $u['id_articulo'] . '-' . $u['id_articulo'] . "' data-bs-toggle='modal' data-bs-target='#edit-inventory-" . $u['id_articulo'] . "' style='display:block;width:49%;color:white;'><span class='glyphicon glyphicon-pencil'></span></button></td>";
+                                            echo "<td nowrap style='padding:0;'><button type='button' class='btn btn-warning' name='edit' id='edit" . $u['id_articulo'] . '-' . $u['id_articulo'] . "' data-bs-toggle='modal' data-bs-target='#edit-inventory-" . $u['id_articulo'] . "' style='display:block;width:48%;color:white;float:left;margin-right:2%;'><span class='glyphicon glyphicon-pencil'></span></button>
+                                            <form action='../controller/delete_item.php' method='POST'><input type='hidden' name='art_id' id='art_id_" . $u['id_articulo'] . "' value='" . $u['id_articulo'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id_articulo'] . '-' . $u['id_articulo'] . "' style='display:block;width:48%;'><span class='glyphicon glyphicon-trash'></span></button></form>
+                                            </td>";
                                             echo "</tr>";
                                             $modals.= '<div class="modal fade" id="edit-inventory-' . $u['id_articulo'] . '" tabindex="1" aria-labelledby="edit-user" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar articulo</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modificar articulo</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                <form action="../controller/edit_inventory_item.php" method="post" class="edit-item-form" name="edit-item-form" id="edit-item-form">
+                                                <form action="../controller/edit_item.php" method="post" class="edit-item-form" name="edit-item-form" id="edit-item-form">
                                                 <input type="hidden" name="art_id" id="art_id_' . $u['id_articulo'] . '" value="' . $u['id_articulo'] . '">
                                                     <div class="form-group">
                                                         <label class="form-title" for="nombre">Nombre</label>
@@ -116,7 +118,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary" name="edit-item" id="edit-item">Editar</button>
+                                                    <button type="submit" class="btn btn-primary" name="edit-item" id="edit-item">Modificar</button>
                                                     </form>
                                                 </div>
                                                 </div>
@@ -167,7 +169,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="../controller/create_inventory_item.php" method="post" name="create-item-form" id="create-item-form">
+                    <form action="../controller/create_item.php" method="post" name="create-item-form" id="create-item-form">
                     <div class="form-group">
                         <label class="form-title" for="nombre">Nombre</label>
                         <input type="text" name="nombre" id="nombre" class="form-control form-input">
@@ -194,7 +196,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" name="create-item-button" id="create-item-button">Agregar</button>
+                    <button type="submit" class="btn btn-primary" name="create-item-button" id="create-item-button">Registrar</button>
                     </form>
                 </div>
             </div> 

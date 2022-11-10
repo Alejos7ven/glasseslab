@@ -3,10 +3,8 @@
     require_once('../model/user.php');
     if (isset($_POST['login'])) {
         try {
-            //set PDO CONNECTION
-            $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
-            $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $user        = new User($connection);
+            //set PDO CONNECTION 
+            $user        = new User($dbhost, $dbuser, $dbpass);
             $ci          = strtolower(htmlentities(addslashes($_POST['ci']), ENT_QUOTES));
             if ($user->exist($ci)) {
                 $can     = $user->isOperational($ci);

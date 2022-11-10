@@ -52,18 +52,18 @@
             return $this->status;
         } 
         public function exist($ci) {
-            $sql    = "SELECT * FROM users WHERE ci LIKE '" . $ci . "'";
-            $amount = $this->getRowCount($sql);
+            $sql    = "SELECT * FROM users WHERE ci LIKE ?";
+            $amount = $this->getRowCount($sql, array($ci));
             return ($amount != 0)? true:false;
         }
         public function getDataUser($ci){
-            $sql    = "SELECT * FROM users WHERE ci LIKE '" . $ci . "'";
-            $amount = $this->getRowCount($sql);
+            $sql    = "SELECT * FROM users WHERE ci LIKE ?";
+            $amount = $this->getRowCount($sql, array($ci));
             if ($amount != 0) {
-                $result = $this->doQuery($sql, true);
+                $result = $this->prepareQuery($sql,array($ci), true);
                 $row    = array();
                 $i      = 0;
-                while($response=$result->fetch(PDO::FETCH_ASSOC)){
+                foreach($result as $response){
                     $this    -> setId($response['id']);
                     $this    -> setCI($response['ci']);
                     $this    -> setPassword($response['password']);
@@ -95,25 +95,26 @@
                 return $message;
             }else { return false; }
         }
-        public function userAreLocked($ci) {
-            $aux = new User($this->connection);
+        public function userIsLocked($ci) {
+            $aux = new User($this->getDBHost(), $this->getDBUser(), $this->getDBPass());
             $data = $aux->getDataUser($ci);
             $type = $data[0]->getStatus();
             $response = ($type == 1) ? true : false;
             return $response;
         }
         public function registerNewUser(User $user, $creator){ 
-            $allowed  = $this->userAreLocked($creator);
-            if (!$allowed) { return false; }
+            $allowed  = $this->userIsLocked($creator);
+            if (!$allowed) { return false; } 
 			$ci       = strtolower($user->getCI()); 
 			$pass     = $user->getPassword();
             // $encrypt  = password_hash($pass, PASSWORD_DEFAULT);
             $name     = $user->getName();
             $last_name= $user->getLastName();  
             $type     = $user->getType();
-			$sql      = "INSERT INTO users (ci, password, name,last_name, type) VALUES ('" . $ci . "','" . $pass . "','" . $name . "','" . $last_name . "', $type)";
-            $result   = $this->doQuery($sql, true); 
-            $new = $this->getDataUser($user->getCI());
+            $params   = array($ci, $pass, $name, $last_name, $type); 
+			$sql      = "INSERT INTO users (ci, password, name,last_name, type) VALUES (?,?,?,?, ?)";
+            $result   = $this->prepareQuery($sql,$params, true); 
+            $new = $this->getDataUser($user->getCI()); 
             if (count($new) > 0) {
                 return true;
             }else {
@@ -121,9 +122,9 @@
             } 
         }
         public function validatePassword($psw, $ci){
-            $result = $this->doQuery("SELECT password FROM users WHERE ci LIKE '" . $ci . "'", true);
+            $result = $this->prepareQuery("SELECT password FROM users WHERE ci LIKE ?",array($ci), true);
             $row    = []; 
-            while($response=$result->fetch(PDO::FETCH_ASSOC)){
+            foreach($result as $response){
                 $pass = $response['password']; 
             }
             // return (password_verify($psw, $pass))?true:false;
@@ -133,7 +134,7 @@
             $valid   = $this->validatePassword($old, $ci);
             if ($valid) {
                 // $encrypt = password_hash($newPass, PASSWORD_DEFAULT); 
-                $this->doQuery("UPDATE users SET password='$newPass' WHERE ci LIKE '$ci'");
+                $this->prepareQuery("UPDATE users SET password=? WHERE ci LIKE ?", array($newPass, $ci));
                 $changed = $this->validatePassword($newPass, $ci);
                 return ($changed)?true:false;
             }else{
@@ -142,15 +143,9 @@
             
         }
         public function updateUser(User $user){
-            $sql = "
-            UPDATE users SET    ci        = '" . $user->getCI() . "',
-                                name      = '" . $user->getName() . "',
-                                last_name = '" . $user->getLastName() . "',
-                                type      = '" . $user->getType() . "',
-                                status    = '" . $user->getStatus() . "'
-                    WHERE id = " . $user->getId() . "
-            ";
-            $result = $this->connection->query($sql); 
+            $sql = "UPDATE users SET ci = ?, name = ?, last_name = ?, type = ?, status = ? WHERE id = ?";
+            $params = array($user->getCI(), $user->getName(), $user->getLastName(), $user->getType(), $user->getStatus(), $user->getId());
+            $result = $this->prepareQuery($sql, $params);
             return ($result)? true:false; 
         }
     }

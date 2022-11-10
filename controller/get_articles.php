@@ -1,15 +1,12 @@
 <?php
     require_once('config.php');
-    require_once('../model/inventory.php');
+    require_once('../model/articles.php');
     @session_start(); 
-    if (!empty($_SESSION['username'])) {
-            //set PDO CONNECTION
-        $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
-        $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $inv        = new Inventory($connection);
-        $result = $inv->doQuery("SELECT * FROM inventario", true);
+    if (!empty($_SESSION['username'])) { 
+        $inv        = new Article($dbhost, $dbuser, $dbpass);
+        $result = $inv->prepareQuery("SELECT * FROM articulos", array(), true);
         $list    = []; 
-        while($response=$result->fetch(PDO::FETCH_ASSOC)){
+        foreach ($result as $response) {
             $c = array(
                 "id_articulo"        => $response['id_articulo'],
                 "nombre"             => $response['nombre'],
@@ -20,7 +17,7 @@
                 "stock"              => $response['stock']
             ); 
             array_push($list, $c); 
-        }  
+        }
     }
 
 ?>

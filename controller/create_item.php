@@ -1,14 +1,12 @@
 <?php
     require_once('config.php');
     require_once('../model/user.php');
-    require_once('../model/inventory.php');
+    require_once('../model/articles.php');
     session_start();
     if (!empty($_SESSION['username'])) {
-        try {
-            $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
-            $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $user        = new User($connection); 
-            $inv         = new Inventory($connection); 
+        try { 
+            $user        = new User($dbhost, $dbuser, $dbpass); 
+            $inv         = new Article($dbhost, $dbuser, $dbpass); 
             if (isset($_POST['create-item-button'])) { 
                 $can         = $user->isOperational($_SESSION['username']);
                 if ($can) {
@@ -21,12 +19,12 @@
                     $created = $inv->addArticulo($inv);
                     if ($created) {
                         $_SESSION['last_action'] = date('Y-n-j H:i:s');
-                        header('location:../view/inventario.php?created=true');
+                        header('location:../view/articulos.php?created=true');
                     }else {
-                        header('location:../view/inventario.php?created=false');
+                        header('location:../view/articulos.php?created=false');
                     } 
                 }else {
-                    header('location:../view/inventario.php?banned=true');
+                    header('location:../view/articulos.php?banned=true');
                 } 
             }
         } catch (\Throwable $th) {

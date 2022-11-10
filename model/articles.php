@@ -1,7 +1,7 @@
 <?php
     require_once('handler.php');
 
-    class Inventory extends Handler {
+    class Article extends Handler {
         private $id_articulo;
         private $nombre;
         private $color;
@@ -53,18 +53,18 @@
             return $this->stock;
         } 
         public function exist($id) {
-            $sql    = "SELECT * FROM inventario WHERE id_articulo = " . $id . "";
-            $amount = $this->getRowCount($sql);
+            $sql    = "SELECT * FROM articulos WHERE id_articulo = ?";
+            $amount = $this->getRowCount($sql, array($id));
             return ($amount != 0)? true:false;
         }
         public function getDatosArticulo($id){
-            $sql    = "SELECT * FROM inventario WHERE id_articulo = " . $id . "";
-            $amount = $this->getRowCount($sql);
+            $sql    = "SELECT * FROM articulos WHERE id_articulo = ?";
+            $amount = $this->getRowCount($sql, array($id));
             if ($amount != 0) {
-                $result = $this->doQuery($sql, true);
+                $result = $this->prepareQuery($sql, array($id), true);
                 $row    = array();
                 $i      = 0;
-                while($response=$result->fetch(PDO::FETCH_ASSOC)){
+                foreach($result as $response){
                     $this    -> setId($response['id_articulo']);
                     $this    -> setNombre($response['nombre']);
                     $this    -> setColor($response['color']);
@@ -80,27 +80,16 @@
                 return false;
             }
         }
-        public function addArticulo(Inventory $inventory){
-			$sql      = "INSERT INTO inventario (nombre, color, marca,tipo, precio,stock) VALUES ('" . $inventory->getNombre() . "','" . $inventory->getColor() . "','" . $inventory->getMarca() . "','" . $inventory->getTipo() . "', " . $inventory->getPrecio() . ", " . $inventory->getStock() . ")";
-            $result   = $this->doQuery($sql, true); 
-            // $new      = $this->getDatosArticulo($inventory->getId());
-            // if (count($new) > 0) {
-            //     return true;
-            // }else {
-            //     return false;
-            // } 
+        public function addArticulo(Article $articles){
+            $params = array($articles->getNombre(), $articles->getColor(), $articles->getMarca(), $articles->getTipo(), $articles->getPrecio(), $articles->getStock());
+			$sql      = "INSERT INTO articulos (nombre, color, marca,tipo, precio,stock) VALUES (?,?,?,?,?,?)";
+            $result   = $this->prepareQuery($sql,$params, true);   
             return true;
         }
-        public function updateArticulo(Inventory $inventory){
-            $sql = "
-            UPDATE inventario SET    nombre        = '" . $inventory->getNombre() . "',
-                                color         = '" . $inventory->getColor() . "',
-                                marca         = '" . $inventory->getMarca() . "',
-                                tipo          = '" . $inventory->getTipo() . "',
-                                precio        = '" . $inventory->getPrecio() . "'
-                    WHERE id_articulo = " . $inventory->getId() . "
-            ";
-            $result = $this->connection->query($sql); 
+        public function updateArticulo(Article $articles){
+            $params = array($articles->getNombre(), $articles->getColor(), $articles->getMarca(), $articles->getTipo(), $articles->getPrecio(), $articles->getId());
+            $sql = "UPDATE articulos SET nombre = ?, color = ?, marca = ?, tipo = ?, precio = ? WHERE id_articulo = ?";
+            $result = $this->prepareQuery($sql, $params); 
             return ($result)? true:false; 
         }
     }

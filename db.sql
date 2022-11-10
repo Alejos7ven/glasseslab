@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
-CREATE TABLE IF NOT EXISTS `inventario` (
+CREATE TABLE IF NOT EXISTS `articulos` (
   `id_articulo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(100) NOT NULL,
   `color` varchar(20) NOT NULL,

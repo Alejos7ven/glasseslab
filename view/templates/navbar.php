@@ -8,17 +8,23 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <?php if(isset($_SESSION['username'])) { ?>
                 <li class="nav-item">
-                    <a href="inventario.php" class="nav-link " aria-current="page" >Inventario</a>
-                </li>
-                <!-- <li class="nav-item">
-                    <a href="movimientos.php" class="nav-link">Compra/Venta</a>
+                    <a href="articulos.php" class="nav-link " aria-current="page" >Artículos</a>
                 </li>
                 <li class="nav-item">
-                    <a href="actores.php" class="nav-link">Clientes/Proveedores</a>
-                </li> -->
-                <!-- <li class="nav-item">
+                    <a href="movimientos.php" class="nav-link">Ventas</a>
+                </li>
+                <li class="nav-item">
+                    <a href="caja.php" class="nav-link">Caja</a>
+                </li>
+                <li class="nav-item">
                     <a href="pedidos.php" class="nav-link">Pedidos</a>
-                </li> -->
+                </li>
+                <li class="nav-item">
+                    <a href="actores.php" class="nav-link">Clientes</a>
+                </li>
+                <li class="nav-item">
+                    <a href="reportes.php" class="nav-link">Reportes</a>
+                </li>
                 <?php if (isset($_SESSION['type']) && $_SESSION['type'] == 1) {  ?> 
                 <li class="nav-item">
                     <a href="usuarios.php" class="nav-link">Usuarios</a>

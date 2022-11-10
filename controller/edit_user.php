@@ -3,10 +3,8 @@ require_once('config.php');
 require_once('../model/user.php');
 session_start();
 if (!empty($_SESSION['username'])) {
-    try {
-        $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
-        $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $user        = new User($connection);
+    try { 
+        $user        = new User($dbhost, $dbuser, $dbpass);
         
         if (isset($_POST["edit-user"])) {
             $can         = $user->isOperational($_SESSION['username']);
@@ -28,7 +26,7 @@ if (!empty($_SESSION['username'])) {
                 } 
         }
     } catch (\Throwable $th) {
-        //throw $th;
+        echo $th;
     }
 }else {
     header('location:../view/index.php');

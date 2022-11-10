@@ -51,7 +51,7 @@
                     
                     <div class="d-inline-block" style="width: 100%;">
                         <input type="text" class="form-control search-bar" name="search-us" id="search-us" placeholder="Buscar">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-user" style="float: right ;">Crear</button>
+                        <div class="" style="float: right ;padding-right:10px;"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#create-user">Registrar</button></div>
                     </div>
                     <div class="table-responsive">
                         <div class='user-main'>
@@ -79,14 +79,15 @@
                                             echo "<td>" . $u['name'] . "</td>";
                                             echo "<td>" . $u['last_name'] . "</td>";
                                             echo "<td>" . $user_type[$u['type']-1] . "</td>";
-                                            echo "<td nowrap><form action='../controller/delete_user.php' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "' style='display:block;float:left;width:49%;'><span class='glyphicon glyphicon-trash'></span></button></form>
-                                            <button type='button' class='btn btn-warning' name='edit' id='edit" . $u['id'] . '-' . $u['id'] . "' data-bs-toggle='modal' data-bs-target='#edit-user-" . $u['id'] . "' style='display:block;width:49%;color:white;'><span class='glyphicon glyphicon-pencil'></span></button></td>";
+                                            echo "<td nowrap style='padding: 0;'><button type='button' class='btn btn-warning' name='edit' id='edit" . $u['id'] . '-' . $u['id'] . "' data-bs-toggle='modal' data-bs-target='#edit-user-" . $u['id'] . "' style='display:block;width:48%;color:white;float:left;margin-right:2%;'><span class='glyphicon glyphicon-pencil'></span></button>
+                                            <form action='../controller/delete_user.php' method='POST'><input type='hidden' name='user_id' id='user_id_" . $u['id'] . "' value='" . $u['id'] . "'><button type='submit' class='btn btn-danger' name='delete' id='delete_" . $u['id'] . '-' . $u['id'] . "' style='display:block;width:48%;'><span class='glyphicon glyphicon-trash'></span></button></form>
+                                            </td>";
                                             echo "</tr>";
                                             $modals.= '<div class="modal fade" id="edit-user-' . $u['id'] . '" tabindex="1" aria-labelledby="edit-user" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Editar usuario</h5>
+                                                    <h5 class="modal-title" id="exampleModalLabel">Modificar usuario</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
@@ -121,7 +122,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                                    <button type="submit" class="btn btn-primary" name="edit-user" id="edit-user">Editar</button>
+                                                    <button type="submit" class="btn btn-primary" name="edit-user" id="edit-user">Modificar</button>
                                                     </form>
                                                 </div>
                                                 </div>
@@ -203,7 +204,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            <button type="submit" class="btn btn-primary" name='create' id='create'>Crear</button>
+            <button type="submit" class="btn btn-primary" name='create' id='create'>Registrar</button>
             </form>
         </div>
         </div>

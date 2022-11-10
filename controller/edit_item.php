@@ -1,14 +1,12 @@
 <?php
 require_once('config.php');
 require_once('../model/user.php');
-require_once('../model/inventory.php');
+require_once('../model/articles.php');
 session_start();
 if (!empty($_SESSION['username'])) {
-    try {
-        $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
-        $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $user        = new User($connection);
-        $inv         = new Inventory($connection);
+    try { 
+        $user        = new User($dbhost, $dbuser, $dbpass);
+        $inv         = new Article($dbhost, $dbuser, $dbpass);
         if (isset($_POST["edit-item"])) {
             $can         = $user->isOperational($_SESSION['username']);
             if ($can) {
@@ -21,11 +19,11 @@ if (!empty($_SESSION['username'])) {
                 $inv -> setPrecio(htmlentities(addslashes($_POST['precio']), ENT_QUOTES));
                 $inv -> setId($_POST['art_id']);
                 $res  = $inv -> updateArticulo($inv);
-                if ($res) { header("location:../view/inventario.php?editted=true"); }
-                else{ header("location:../view/inventario.php?editted=false"); }
+                if ($res) { header("location:../view/articulos.php?editted=true"); }
+                else{ header("location:../view/articulos.php?editted=false"); }
                 
             }else {
-                header('location:../view/inventario.php?banned=true');
+                header('location:../view/articulos.php?banned=true');
             } 
         }else{
             echo "???";

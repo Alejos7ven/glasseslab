@@ -4,11 +4,8 @@
         require_once('config.php');
         require_once('../model/user.php');
         if (isset($_POST['changepsw'])) {
-            try {
-                //set PDO CONNECTION
-                $connection  = new PDO($dbhost, $dbuser, $dbpass);//data connection with PDO
-                $connection  -> setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $user  = new User($connection);
+            try { 
+                $user  = new User($dbhost, $dbuser, $dbpass);
                 $can   = $user->isOperational($_SESSION['username']);
                 if ($can) {
                     $old   = htmlentities(addslashes($_POST['old']), ENT_QUOTES);
